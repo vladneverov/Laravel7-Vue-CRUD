@@ -4,6 +4,10 @@
 
         <div class="row">
             <div class="col-sm-6">
+
+                <validation-errors :errors="validationErrors"
+                           v-if="validationErrors"></validation-errors>
+
                 <form @submit.prevent="addPost" class="mb-4">
                     <div class="form-group">
                         <label for="title">Название</label>
@@ -87,7 +91,8 @@ export default {
             pagination: {},
             edit: false,
             loading: true,
-            errored: false
+            errored: false,
+            validationErrors: ''
         }
     },
     mounted() {
@@ -143,7 +148,13 @@ export default {
 
                       console.log(response)
                   })
-                  .catch(error => console.log(error))
+                  .catch(error => {
+                      if (error.response.status === 422) {
+                         this.validationErrors = error.response.data.errors;
+                      }
+                      
+                      console.log(error)
+                  })
             } else {
                 // Редактирование поста
                 axios
@@ -158,7 +169,13 @@ export default {
 
                       console.log(response)
                   })
-                  .catch(error => console.log(error))
+                  .catch(error => {
+                      if (error.response.status === 422) {
+                         this.validationErrors = error.response.data.errors;
+                      }
+
+                      console.log(error)
+                  })
             }
         },
         editPost(post) {
