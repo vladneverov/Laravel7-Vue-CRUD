@@ -20,6 +20,8 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button v-if="edit" @click="edit = false"
+                            type="button" class="btn btn-light">Отмена</button>
                 </form>
             </div>
         </div>
@@ -165,6 +167,7 @@ export default {
                   .then(response => {
                       this.post.title = ''
                       this.post.description = ''
+                      this.edit = false
                       this.getPosts()
 
                       console.log(response)
