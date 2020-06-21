@@ -1,3 +1,4 @@
+import 'promise-polyfill/src/polyfill';
 window._ = require('lodash');
 
 /**
